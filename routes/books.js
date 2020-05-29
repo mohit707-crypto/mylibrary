@@ -6,7 +6,7 @@ const router = express.Router()
 const Book = require('../models/book')
 //const uploadPath = path.join('public', Book.coverImageBasePath)
 const Author = require('../models/authors')
-const imageMimeTypes = ['images/jpeg', 'images/png, images/gif']
+const imageMimeTypes = ['image/jpeg', 'image/png, images/gif']
 // const upload = multer ({
 //     dest:uploadPath,
 //     fileFilter:(req,file,callback ) => {
@@ -57,7 +57,8 @@ router.post('/',  async (req, res) => {
      const newBook = await book.save()
        //res.redirect(`books/${newBook.id}`)
        res.redirect(`books`) 
- } catch  {
+ } catch(err)  {
+     console.log(err)
       renderNewPage(res, book, true)
      }
 })  
@@ -82,7 +83,7 @@ function saveCover(book,  coverEncoded) {
     const cover = JSON.parse(coverEncoded)
     if (cover != null && imageMimeTypes.includes(cover.type)) {
          book.coverImage = new Buffer.from(cover.data, 'base64')
-        book.coverImageType = cover.type    
+        book.coverImageType = cover.type
     }
 }
 module.exports = router 

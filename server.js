@@ -2,13 +2,11 @@ if(process.env.NODE_EN !== 'production'){
     require('dotenv').config()
 }
 
-
-
 const express = require('express')
 const app = express()
 const expressLayouts = require('express-ejs-layouts')
 const bodyParser = require('body-parser')
-
+const methodOverride = require ('method-override')
 const indexRouter = require('./routes/index')
 const authorRouter = require('./routes/authors') 
 const bookRouter = require('./routes/books') 
@@ -18,6 +16,7 @@ app.set('views', __dirname+'/views')
 app.set('layouts','layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
+app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ limit: '10mb', extended:false }))
 
 const mongoose = require('mongoose')

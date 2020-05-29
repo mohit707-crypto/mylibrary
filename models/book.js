@@ -27,7 +27,7 @@ const bookSchema = new mongoose.Schema({
            type: Buffer,
            required: true
        },
-        coverImagetype:{
+       coverImageType:{
         type: String,
         required: true    
        },
@@ -40,9 +40,7 @@ const bookSchema = new mongoose.Schema({
 
 bookSchema.virtual('coverImagePath').get(function(){
     if(this.coverImage !=null && this.coverImagetype!= null){
-        return `data:${this.coverImagetype};charset=utf-8;base64,${
-            this.coverImage.toString('base64')
-        }`
+        return `data:${this.coverImagetype};charset=utf-8;base64,${ this.coverImage.toString('base64')}`
     }
 })
 module.exports = mongoose.model('Book', bookSchema)
